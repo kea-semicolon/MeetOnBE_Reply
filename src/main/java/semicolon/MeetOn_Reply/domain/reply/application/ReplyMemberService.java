@@ -2,30 +2,37 @@ package semicolon.MeetOn_Reply.domain.reply.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.http.HttpHeaders;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.util.UriComponentsBuilder;
+import semicolon.MeetOn_Reply.domain.reply.dto.ReplyMemberDto;
+
+import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class ReplyBoardService {
+public class ReplyMemberService {
 
     private final WebClient webClient;
 
-    public Boolean boardExists(Long boardId, String accessToken) {
+    public List<ReplyMemberDto> getUserInfoList(List<Long> userIdList, String accessToken) {
         String uri = UriComponentsBuilder
-                .fromUriString("http://localhost:8000/board/reply/exist")
-                .queryParam("boardId", boardId)
+                .fromUriString("http://localhost:8000/member/reply/infoList")
                 .toUriString();
-        return webClient.get()
+
+        return webClient
+                .post()
                 .uri(uri)
                 .header(HttpHeaders.AUTHORIZATION, accessToken)
+                .bodyValue(userIdList)
                 .retrieve()
-                .bodyToMono(Boolean.class)
+                .bodyToMono(new ParameterizedTypeReference<List < ReplyMemberDto >>() {
+                })
                 .block();
     }
 }

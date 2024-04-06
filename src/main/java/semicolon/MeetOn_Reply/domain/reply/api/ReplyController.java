@@ -4,6 +4,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import semicolon.MeetOn_Reply.domain.reply.application.ReplyService;
@@ -35,8 +36,9 @@ public class ReplyController {
 
     @GetMapping
     public ResponseEntity<Page<ReplyInfoResponseDto>> replyList(@RequestParam Long boardId,
+                                                                Pageable pageable,
                                                                 HttpServletRequest request) {
-        Page<ReplyInfoResponseDto> replyList = replyService.getReplyList(boardId, request);
-        return ResponseEntity.ok();
+        Page<ReplyInfoResponseDto> replyList = replyService.getReplyList(boardId, pageable, request);
+        return ResponseEntity.ok(replyList);
     }
 }

@@ -7,6 +7,7 @@ import jakarta.persistence.Id;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import semicolon.MeetOn_Reply.domain.BaseTimeEntity;
 import semicolon.MeetOn_Reply.domain.reply.dto.ReplyDto;
 
 import static semicolon.MeetOn_Reply.domain.reply.dto.ReplyDto.*;
@@ -14,7 +15,7 @@ import static semicolon.MeetOn_Reply.domain.reply.dto.ReplyDto.*;
 @Getter
 @Entity
 @NoArgsConstructor
-public class Reply {
+public class Reply extends BaseTimeEntity {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
