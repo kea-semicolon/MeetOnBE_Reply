@@ -34,11 +34,24 @@ public class ReplyController {
         return ResponseEntity.ok(replyId + " " + "Created");
     }
 
+    /**
+     * 댓글 페이징 목록
+     * @param boardId
+     * @param pageable
+     * @param request
+     * @return
+     */
     @GetMapping
     public ResponseEntity<Page<ReplyInfoResponseDto>> replyList(@RequestParam Long boardId,
                                                                 Pageable pageable,
                                                                 HttpServletRequest request) {
         Page<ReplyInfoResponseDto> replyList = replyService.getReplyList(boardId, pageable, request);
         return ResponseEntity.ok(replyList);
+    }
+
+    @DeleteMapping
+    public ResponseEntity<String> deleteReply(@RequestParam Long replyId) {
+        replyService.deleteReply(replyId);
+        return ResponseEntity.ok("success");
     }
 }

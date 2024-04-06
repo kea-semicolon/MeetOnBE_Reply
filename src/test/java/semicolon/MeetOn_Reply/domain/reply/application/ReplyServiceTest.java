@@ -31,6 +31,7 @@ import semicolon.MeetOn_Reply.global.util.CookieUtil;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
@@ -102,11 +103,11 @@ class ReplyServiceTest {
                 new ReplyMemberDto(2L, "test2")
         );
         Page<Reply> replyPage = new PageImpl<>(replies, pageable, replies.size());
+
+        //when
         when(replyBoardService.boardExists(1L, "Bearer test-token")).thenReturn(true);
         when(replyRepository.findAllByBoardId(1L, pageable)).thenReturn(replyPage);
         when(replyMemberService.getUserInfoList(List.of(1L, 2L), "Bearer test-token")).thenReturn(memberInfoLists);
-
-        //when
         Map<Long, String> memberIdToUsernameMap = memberInfoLists.stream()
                 .collect(Collectors.toMap(ReplyMemberDto::getId, ReplyMemberDto::getUsername));
         List<ReplyInfoResponseDto> result = replies
@@ -123,6 +124,21 @@ class ReplyServiceTest {
 
         //then
         assertThat(result.size()).isEqualTo(resultPage.getContent().size());
+    }
+
+    @Test
+    void 댓글_삭제() {
+        //given
+        Long replyId = 1L;
+        Reply reply = new Reply(replyId, "test", 1L, 1L);
+
+        //when
+        when(replyRepository.findById(replyId)).thenReturn(Optional.of(reply));
+        replyService.deleteReply(replyId);
+
+        //then
+        verify(replyRepository).findById(replyId);
+        verify(replyRepository).delete(reply);
     }
 
     private void createSetCookie(String name, String value) {

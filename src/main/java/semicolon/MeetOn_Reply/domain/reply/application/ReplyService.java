@@ -86,5 +86,16 @@ public class ReplyService {
                 ).toList();
         return new PageImpl<>(result, pageable, replyPage.getTotalPages());
     }
+
+    /**
+     * 댓글 삭제
+     * @param replyId
+     */
+    @Transactional
+    public void deleteReply(Long replyId) {
+        Reply reply = replyRepository.findById(replyId)
+                .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REPLY_NOT_FOUND));
+        replyRepository.delete(reply);
+    }
 }
 
