@@ -98,13 +98,5 @@ public class ReplyService {
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REPLY_NOT_FOUND));
         replyRepository.delete(reply);
     }
-
-    @Transactional
-    @KafkaListener(topics = "board-deleted-topic", groupId = "reply-group")
-    public void deleteByBoardDeleted(String boardIdStr) {
-        log.info("Board 삭제 boardId={}", boardIdStr);
-        Long boardId = Long.valueOf(boardIdStr);
-        replyRepository.deleteAllByBoardId(boardId);
-    }
 }
 
