@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import semicolon.MeetOn_Reply.domain.reply.dao.ReplyRepository;
@@ -96,6 +97,14 @@ public class ReplyService {
         Reply reply = replyRepository.findById(replyId)
                 .orElseThrow(() -> new BusinessLogicException(ExceptionCode.REPLY_NOT_FOUND));
         replyRepository.delete(reply);
+    }
+
+    @Transactional
+    @KafkaListener(topics = "board-deleted-topic", groupId = "reply-group")
+    public void deleteByBoardDeleted(String boardIdStr) {
+        log.info("Board 삭제 boardId={}", boardIdStr);
+        Long boardId = Long.valueOf(boardIdStr);
+        replyRepository.deleteAllByBoardId(boardId);
     }
 }
 

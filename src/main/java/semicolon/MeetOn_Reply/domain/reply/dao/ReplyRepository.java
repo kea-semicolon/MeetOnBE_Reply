@@ -8,4 +8,6 @@ import semicolon.MeetOn_Reply.domain.reply.domain.Reply;
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
 
     Page<Reply> findAllByBoardId(Long boardId, Pageable pageable);
+
+    void deleteAllByBoardId(Long boardId);
 }

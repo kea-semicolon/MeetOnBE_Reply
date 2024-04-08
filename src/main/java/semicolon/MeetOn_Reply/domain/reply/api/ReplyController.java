@@ -5,7 +5,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.kafka.annotation.KafkaListener;
 import org.springframework.web.bind.annotation.*;
 import semicolon.MeetOn_Reply.domain.reply.application.ReplyService;
 
@@ -31,7 +33,7 @@ public class ReplyController {
                                             @RequestBody ReplySaveRequestDto replySaveRequestDto,
                                             HttpServletRequest request) {
         Long replyId = replyService.saveReply(boardId, replySaveRequestDto, request);
-        return ResponseEntity.ok(replyId + " " + "Created");
+        return ResponseEntity.status(HttpStatus.CREATED).body(replyId + " " + "Created");
     }
 
     /**
@@ -49,6 +51,11 @@ public class ReplyController {
         return ResponseEntity.ok(replyList);
     }
 
+    /**
+     * 댓글 삭제
+     * @param replyId
+     * @return
+     */
     @DeleteMapping
     public ResponseEntity<String> deleteReply(@RequestParam Long replyId) {
         replyService.deleteReply(replyId);
