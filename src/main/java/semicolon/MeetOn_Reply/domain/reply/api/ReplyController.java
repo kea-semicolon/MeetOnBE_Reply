@@ -1,5 +1,6 @@
 package semicolon.MeetOn_Reply.domain.reply.api;
 
+import io.swagger.v3.oas.annotations.Operation;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +28,7 @@ public class ReplyController {
      * @param request
      * @return
      */
+    @Operation(description = "댓글 작성")
     @PostMapping
     public ResponseEntity<String> saveReply(@RequestParam Long boardId,
                                             @RequestBody ReplySaveRequestDto replySaveRequestDto,
@@ -42,6 +44,7 @@ public class ReplyController {
      * @param request
      * @return
      */
+    @Operation(description = "댓글 리스트(페이징)")
     @GetMapping
     public ResponseEntity<Page<ReplyInfoResponseDto>> replyList(@RequestParam Long boardId,
                                                                 Pageable pageable,
@@ -55,6 +58,7 @@ public class ReplyController {
      * @param replyId
      * @return
      */
+    @Operation(description = "댓글 삭제")
     @DeleteMapping
     public ResponseEntity<String> deleteReply(@RequestParam Long replyId) {
         replyService.deleteReply(replyId);
