@@ -44,7 +44,7 @@ public class ReplyController {
      * @param request
      * @return
      */
-    @Operation(summary = "댓글 리스트", description = "댓글 리스트(페이징)")
+    @Operation(summary = "댓글 리스트", description = "댓글 리스트 (페이징)")
     @GetMapping
     public ResponseEntity<Page<ReplyInfoResponseDto>> replyList(@RequestParam Long boardId,
                                                                 Pageable pageable,
