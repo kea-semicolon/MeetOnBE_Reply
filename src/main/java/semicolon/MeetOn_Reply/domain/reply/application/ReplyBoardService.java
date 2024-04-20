@@ -18,7 +18,7 @@ public class ReplyBoardService {
 
     public Boolean boardExists(Long boardId, String accessToken) {
         String uri = UriComponentsBuilder
-                .fromUriString("http://localhost:8000/board/reply/exist")
+                .fromUriString("http://172.16.212.76:8000/board/reply/exist")
                 .queryParam("boardId", boardId)
                 .toUriString();
         return webClient.get()

@@ -22,7 +22,7 @@ public class ReplyMemberService {
 
     public List<ReplyMemberDto> getUserInfoList(List<Long> userIdList, String accessToken) {
         String uri = UriComponentsBuilder
-                .fromUriString("http://localhost:8000/member/reply/infoList")
+                .fromUriString("http://172.16.212.76:8000/member/reply/infoList")
                 .toUriString();
 
         return webClient
