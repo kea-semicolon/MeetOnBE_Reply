@@ -2,6 +2,7 @@ package semicolon.MeetOn_Reply.domain.reply.application;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpHeaders;
 import org.springframework.stereotype.Service;
@@ -20,9 +21,12 @@ public class ReplyMemberService {
 
     private final WebClient webClient;
 
+    @Value("${app.gateway.url}")
+    private String gateway;
+
     public List<ReplyMemberDto> getUserInfoList(List<Long> userIdList, String accessToken) {
         String uri = UriComponentsBuilder
-                .fromUriString("http://172.16.212.76:8000/member/reply/infoList")
+                .fromUriString(gateway + "/member/reply/infoList")
                 .toUriString();
 
         return webClient

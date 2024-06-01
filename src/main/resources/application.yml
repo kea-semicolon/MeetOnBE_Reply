@@ -4,16 +4,6 @@ server:
 spring:
   application:
     name: reply
-  datasource:
-    #    url: jdbc:h2:tcp://localhost/~/withsafe
-    #    username: sa
-    #    password: 1
-    #    driver-class-name: org.h2.Driver
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://172.16.212.76/meeton?useSSL=false&serverTimezone=Asia/Seoul&characterEncoding=UTF-8&allowPublicKeyRetrieval=true
-    username: root
-    password: '1918'
-
 
   data:
     web:
@@ -41,18 +31,3 @@ springdoc:
     path: /reply-api/v3/api-docs
   swagger-ui:
     path: /reply-api/v3/swagger-ui.html
-
-openapi:
-  service:
-    url: http://172.16.212.76:8000
-
-eureka:
-  client:
-    fetch-registry: true
-    register-with-eureka: true
-    service-url:
-      defaultZone: http://172.16.212.76:8761/eureka
-
-  instance:
-    hostname: 172.16.212.76
-    instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}

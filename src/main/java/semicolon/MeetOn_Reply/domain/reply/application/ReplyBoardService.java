@@ -3,6 +3,7 @@ package semicolon.MeetOn_Reply.domain.reply.application;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.http.HttpHeaders;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.reactive.function.client.WebClient;
@@ -16,9 +17,12 @@ public class ReplyBoardService {
 
     private final WebClient webClient;
 
+    @Value("${app.gateway.url}")
+    private String gateway;
+
     public Boolean boardExists(Long boardId, String accessToken) {
         String uri = UriComponentsBuilder
-                .fromUriString("http://172.16.212.76:8000/board/reply/exist")
+                .fromUriString(gateway + "/board/reply/exist")
                 .queryParam("boardId", boardId)
                 .toUriString();
         return webClient.get()
