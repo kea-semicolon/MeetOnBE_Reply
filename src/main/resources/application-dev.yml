@@ -2,7 +2,6 @@ app:
   gateway:
     url: http://172.16.212.76:8000
 
-
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver

@@ -27,5 +27,5 @@ eureka:
       defaultZone: ${유레카 주소}:8761
 
   instance:
-    hostname: ${게이트웨이 주소}
+    hostname: ${유레카 주소}
     instance-id: ${spring.application.name}:${spring.application.instance_id:${random.value}}
