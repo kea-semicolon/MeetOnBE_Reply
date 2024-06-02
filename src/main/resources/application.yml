@@ -31,3 +31,8 @@ springdoc:
     path: /reply-api/v3/api-docs
   swagger-ui:
     path: /reply-api/v3/swagger-ui.html
+
+---
+spring:
+  profiles:
+    active: dev, prod
